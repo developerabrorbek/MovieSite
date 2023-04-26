@@ -5,7 +5,8 @@ import Watch from "../../assets/watch.svg";
 
 function Hero(props) {
     return (
-        <section className='hero mt-[78px]'>
+        <section className='hero mt-[78px] h-[65vh]'>
+            <img src="./src/assets/back.png" alt="Image" className='absolute top-0 -z-10' />
             <div className="container mx-auto">
                 <div className="hero-body w-[404px]">
                     <h1 className='font-bold text-[48px] leading-[56px] text-white'>John Wick 3 : Parabellum</h1>
