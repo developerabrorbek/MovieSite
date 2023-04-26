@@ -2,8 +2,12 @@ import React from 'react';
 import Imdb from "../../assets/imdb.png";
 import Fruit from "../../assets/fruit.png";
 import Like from "../../assets/like.svg";
+import { useState } from 'react';
+import GetData from '../GetData';
 
 function Arrival(props) {
+  const [data,setData] = useState('');
+  GetData("https://api.themoviedb.org/3/movie/upcoming?api_key=01a54b95950c537418879c9806285052&language=en-US&page=1");
     return (
         <section className="arrival mb-12">
       <div className="container mx-auto">
