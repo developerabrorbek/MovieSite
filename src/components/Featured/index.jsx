@@ -3,37 +3,36 @@ import Imdb from "../../assets/imdb.png";
 import Fruit from "../../assets/fruit.png";
 import Like from "../../assets/like.svg";
 import GetData from "../GetData";
-import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Featured() {
   const [data, setData] = useState("");
   const [genres, setGenres] = useState("");
+
   GetData(
     "https://api.themoviedb.org/3/movie/top_rated?api_key=01a54b95950c537418879c9806285052&language=en-US&page=1",
     setData
   );
 
-  GetData("https://api.themoviedb.org/3/genre/movie/list?api_key=01a54b95950c537418879c9806285052&language=en-US",setGenres);
-console.log(genres);
   if (data?.results?.length)
     return (
-      <section className="featured mb-12">
+      <section className="featured mb-12 mt-6">
         <div className="container mx-auto">
           <div className="featured-body flex justify-between py-4 items-center mb-4">
             <h2 className="font-bold text-[36px] leading-[47px]">
               Featured Movie
             </h2>
-            <a
-              href="#"
+            <Link
+              to="/featured"
               className="text-[#BE123C] hover:text-[#e63b3b] font-normal text-[18px] leading-[24px]"
             >
               See more
-            </a>
+            </Link>
           </div>
-          <ul className="featured-cards grid grid-cols-4 justify-between gap-y-5">
+          <ul className="featured-cards grid grid-cols-4 justify-between gap-y-5">                      
             {data["results"].slice(0,4).map((item) => {
-             return (<li className="featured-card w-[250px]" data-id={item.id}>
+             return (<li className="featured-card w-[250px]" data-id={item.id} onClick={(e)=> path=`/${item.id}`}>
               <div className="card-img relative">
                 <img
                   src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`}
@@ -65,11 +64,7 @@ console.log(genres);
                   </div>
                 </div>
                 <p className="category text-[#9CA3AF] font-bold text-[12px] leading-4">
-                  {item["genre_ids"].map((item)=>{
-                    genres["genres"].filter(genre=>{
-                      if(item == genre.id) return genre.name.toString();
-                    })
-                  })}
+                Action, Adventure, Horror
                 </p>
               </div>
             </li>);
