@@ -1,8 +1,8 @@
-import React, { useState, memo } from "react";
+import React, { useState} from "react";
 import Imdb from "../../assets/imdb.png";
 import Fruit from "../../assets/fruit.png";
 import Watch from "../../assets/watch.svg";
-import GetData from "../GetData";
+import GetData, { GetMovieTrailer } from "../GetData";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -15,35 +15,26 @@ import {
 } from "swiper";
 import "swiper/css/bundle";
 import "./main.css";
+import { Link, useNavigate } from "react-router-dom";
 
-import Menu from "../../assets/menu.svg";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/site-logo.png";
 
 function Hero(props) {
   const [heroData, setheroData] = useState("");
-
-  useEffect(() => {
-    window.addEventListener("scroll", isSticky);
-    return () => {
-      window.removeEventListener("scroll", isSticky);
-    };
-  });
-  const toggleClass = "is-sticky";
-  const isSticky = (e) => {
-    const header = document.querySelector(".header");
-    const currentScroll = window.pageYOffset;
-    if (currentScroll > 150) {
-      header.classList.add(toggleClass);
-    } else {
-      header.classList.remove(toggleClass);
-    }
-  };
+  const navigate = useNavigate();
 
   GetData(
     "https://api.themoviedb.org/3/trending/movie/day?api_key=01a54b95950c537418879c9806285052",
     setheroData
   );
+
+
+  const watchMovie = (e,id)=>{
+    let idLink = id;
+    if(e.target.matches(".watch") || e.target.matches(".watch-img") || e.target.matches(".watch-text")){
+      let path = `https://www.youtube.com/watch?v=${GetMovieTrailer(idLink)}`;
+      window.location.href = path;
+    }
+  }
 
   if (heroData?.results?.length)
     return (
@@ -68,6 +59,7 @@ function Hero(props) {
             scrollbar={{ draggable: true }}
           >
             {heroData.results.map((item) => {
+              
               return (
                 <SwiperSlide>
                   <img
@@ -76,8 +68,8 @@ function Hero(props) {
                     className="absolute right-center -z-10 w-full -top-5"
                   />
                   <div className="container mx-auto flex items-center h-full">
-                    <div className="hero-body w-[404px] px-6">
-                      <h1 className="font-bold text-[48px] leading-[56px] text-white max-h-32 overflow-hidden" title={item.title}>
+                    <div className="hero-body w-[404px] px-6" onClick={(e)=>watchMovie(e,item.id)}>
+                      <h1 className="font-bold text-[48px] leading-[56px] text-white max-h-[120px] overflow-hidden" title={item.title}>
                         {item.title}
                       </h1>
                       <div className="hero-extra flex gap-x-6 mt-6">
@@ -97,11 +89,12 @@ function Hero(props) {
                       <p className="hero-text text-white max-w-[302px] mt-4 font-medium text-[14px] leading-[18px] max-h-96 ">
                         {item.overview}
                       </p>
-                      <a
-                        href="#"
-                        className="watch flex items-center w-fit mt-4 hover:bg-[#ca1845] gap-x-2 py-[6px] px-4 bg-[#BE123C] rounded-[6px] "
+                      <a href="#" 
+                      // target="_blank"
+                      id={item.id}
+                      className="watch flex items-center w-fit mt-4 hover:bg-[#ca1845] gap-x-2 py-[6px] px-4 bg-[#BE123C] rounded-[6px]"
                       >
-                        <img src={Watch} alt="Watch" />
+                        <img src={Watch} alt="Watch" className="watch-img"/>
                         <p className="watch-text text-white uppercase">
                           watch trailer
                         </p>

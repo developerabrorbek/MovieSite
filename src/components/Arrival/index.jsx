@@ -4,6 +4,7 @@ import Fruit from "../../assets/fruit.png";
 import Like from "../../assets/like.svg";
 import { useState } from "react";
 import GetData from "../GetData";
+import { Link } from "react-router-dom";
 
 function Arrival(props) {
   const [arrivalData, setarrivalData] = useState("");
@@ -17,17 +18,17 @@ function Arrival(props) {
       <div className="container mx-auto">
         <div className="arrival-body flex justify-between py-4 items-center mb-4">
           <h2 className="font-bold text-[36px] leading-[47px]">New Arrival</h2>
-          <a
-            href="#"
+          <Link
+            to="/arrival"
             className="text-[#BE123C] hover:text-[#e63b3b] font-normal text-[18px] leading-[24px]"
           >
             See more
-          </a>
+          </Link>
         </div>
         <ul className="arrival-cards flex gap-y-5 justify-between">
           {arrivalData["results"].slice(0,4).map((item) => {
             return (
-              <li className="arrival-card w-[250px]" data-id={item.id}>
+              <li className="arrival-card w-[250px] h-[542px]" data-id={item.id}>
                 <div className="card-img relative">
                   <img src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`} alt="image" />
                   <img
@@ -42,7 +43,7 @@ function Arrival(props) {
                   <p className="year text-[#9CA3AF] font-bold text-[12px] leading-4 mb-4">
                     USA, {item.release_date.slice(0,4)}
                   </p>
-                  <h3 className="text-[#111827] font-bold text-[18px] leading-[23px]">
+                  <h3 className="text-[#111827] font-bold text-[18px] leading-[23px] h-[48px] overflow-hidden" title={item.title}>
                   {item.title}
                   </h3>
                   <div className="hero-extra flex justify-between mt-4 mb-4">

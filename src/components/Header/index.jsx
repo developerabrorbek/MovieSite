@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Logo from "../../assets/site-logo.png";
 import searchIcon from "../../assets/Search-icon.svg";
 import Back from "../../assets/back.png";
@@ -6,6 +6,27 @@ import Menu from "../../assets/menu.svg";
 import { Link } from "react-router-dom";
 
 function Header(props) {
+
+  useEffect(() => {
+    window.addEventListener("scroll", isSticky);
+    return () => {
+      window.removeEventListener("scroll", isSticky);
+    };
+  });
+
+  
+  const toggleClass = "is-sticky";
+  const isSticky = (e) => {
+    const header = document.querySelector(".header");
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 150) {
+      header.classList.add(toggleClass);
+    } else {
+      header.classList.remove(toggleClass);
+    }
+  };
+
+
   return (
     <header className="header fixed z-20 w-full">
           <div className="container mx-auto">

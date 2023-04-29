@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 function Featured() {
   const [data, setData] = useState("");
-  const [genres, setGenres] = useState("");
 
   GetData(
     "https://api.themoviedb.org/3/movie/top_rated?api_key=01a54b95950c537418879c9806285052&language=en-US&page=1",
@@ -32,7 +31,7 @@ function Featured() {
           </div>
           <ul className="featured-cards grid grid-cols-4 justify-between gap-y-5">                      
             {data["results"].slice(0,4).map((item) => {
-             return (<li className="featured-card w-[250px]" data-id={item.id} onClick={(e)=> path=`/${item.id}`}>
+             return (<li className="featured-card w-[250px] h-[542px]" data-id={item.id} onClick={(e)=> path=`/${item.id}`}>
               <div className="card-img relative">
                 <img
                   src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`}
@@ -50,7 +49,7 @@ function Featured() {
                 <p className="year text-[#9CA3AF] font-bold text-[12px] leading-4 mb-4">
                   USA, {item.release_date.slice(0,4)}
                 </p>
-                <h3 className="text-[#111827] font-bold text-[18px] leading-[23px]">
+                <h3 className="text-[#111827] font-bold text-[18px] leading-[23px]  h-[48px] overflow-hidden" title={item.title}>
                   {item.title}
                 </h3>
                 <div className="hero-extra flex justify-between mt-4 mb-4">
