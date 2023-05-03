@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./pages/Main";
-import Featured from "./pages/Featured";
-import Arrival from "./pages/Arrival";
+import FeaturedPage from "./pages/Featured";
 import "./index.css";
+import ArrivalPage from "./pages/Arrival";
+import About from "./pages/About";
+import SearchPage from "./pages/Search";
 
 
 const App = () => {
@@ -15,8 +17,10 @@ const App = () => {
         <Header />
         <Routes>
           <Route element={<Main/>} path="/"/>
-          <Route element={<Featured/>} path="/featured"/>
-          <Route element={<Arrival/>} path="/arrival"/>
+          <Route element={<FeaturedPage/>} path="/featured"/>
+          <Route element={<ArrivalPage/>} path="/arrival"/>
+          <Route element={<About/>} path="/about/:id"/>
+          <Route element={<SearchPage/>} path="/search/:text"/>
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -2,14 +2,21 @@ import React from "react";
 import Imdb from "../../assets/imdb.png";
 import Fruit from "../../assets/fruit.png";
 import Like from "../../assets/like.svg";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import GetData from "../GetData";
 import { Link } from "react-router-dom";
 
-function Arrival(props) {
+function Arrival({cards,page}) {
   const [arrivalData, setarrivalData] = useState("");
+  const [pages, setPages]= useState(1);
+
+  let elCards = cards ? 20 : 4;
+  useMemo(()=>{
+    setPages(page)
+  },[page])
+
   GetData(
-    "https://api.themoviedb.org/3/movie/upcoming?api_key=01a54b95950c537418879c9806285052&language=en-US&page=1",
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=01a54b95950c537418879c9806285052&language=en-US&page=${pages}`,
     setarrivalData
   );
   if (arrivalData?.results?.length)
@@ -25,12 +32,12 @@ function Arrival(props) {
             See more
           </Link>
         </div>
-        <ul className="arrival-cards flex gap-y-5 justify-between">
-          {arrivalData["results"].slice(0,4).map((item) => {
+        <ul className="arrival-cards grid grid-cols-4 justify-between gap-y-5">
+          {arrivalData["results"].slice(0,elCards).map((item) => {
             return (
-              <li className="arrival-card w-[250px] h-[542px]" data-id={item.id}>
+              <Link to={`/about/${item.id}`} className="arrival-card w-[250px] h-[542px]" data-id={item.id}>
                 <div className="card-img relative">
-                  <img src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`} alt="image" />
+                  <img src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`} alt="Image Not found" className="h-[375px]"/>
                   <img
                     src={Like}
                     alt="favorite"
@@ -60,7 +67,7 @@ function Arrival(props) {
                     Action, Adventure, Horror
                   </p>
                 </div>
-              </li>
+              </Link>
             );
           })}
         </ul>

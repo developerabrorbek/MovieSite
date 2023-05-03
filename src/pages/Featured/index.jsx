@@ -1,11 +1,13 @@
 import React from 'react';
+import Featured from '../../components/Featured';
 
-const Featured = () => {
+const FeaturedPage = () => {
     return (
-        <div>
-            <h1>Featured page</h1>
-        </div>
+        <main className='pt-24'>
+            <Featured cards={20} page={2} pagination={true}/>
+            
+        </main>
     );
 };
 
-export default Featured;
+export default FeaturedPage;

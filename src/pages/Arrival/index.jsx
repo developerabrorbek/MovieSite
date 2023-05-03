@@ -1,11 +1,12 @@
 import React from 'react';
+import Arrival from '../../components/Arrival';
 
-const Arrival = () => {
+const ArrivalPage = () => {
     return (
-        <div>
-            <h1>Arrival page</h1>
-        </div>
+        <main className='pt-24'>
+        <Arrival cards={20} page={9} pagination={true}/>
+        </main>
     );
 };
 
-export default Arrival;
+export default ArrivalPage;

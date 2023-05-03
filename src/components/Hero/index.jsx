@@ -3,7 +3,6 @@ import Imdb from "../../assets/imdb.png";
 import Fruit from "../../assets/fruit.png";
 import Watch from "../../assets/watch.svg";
 import GetData, { GetMovieTrailer } from "../GetData";
-import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Navigation,
@@ -15,12 +14,10 @@ import {
 } from "swiper";
 import "swiper/css/bundle";
 import "./main.css";
-import { Link, useNavigate } from "react-router-dom";
 
 
 function Hero(props) {
   const [heroData, setheroData] = useState("");
-  const navigate = useNavigate();
 
   GetData(
     "https://api.themoviedb.org/3/trending/movie/day?api_key=01a54b95950c537418879c9806285052",
@@ -90,7 +87,6 @@ function Hero(props) {
                         {item.overview}
                       </p>
                       <a href="#" 
-                      // target="_blank"
                       id={item.id}
                       className="watch flex items-center w-fit mt-4 hover:bg-[#ca1845] gap-x-2 py-[6px] px-4 bg-[#BE123C] rounded-[6px]"
                       >

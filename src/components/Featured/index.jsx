@@ -5,12 +5,19 @@ import Like from "../../assets/like.svg";
 import GetData from "../GetData";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 
-function Featured() {
+function Featured({cards,page}) {
   const [data, setData] = useState("");
+  const [pages, setPages]= useState(1);
+
+  let elCards = cards ? 20 : 4;
+  useMemo(()=>{
+    setPages(page)
+  },[page])
 
   GetData(
-    "https://api.themoviedb.org/3/movie/top_rated?api_key=01a54b95950c537418879c9806285052&language=en-US&page=1",
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=01a54b95950c537418879c9806285052&language=en-US&page=${pages}`,
     setData
   );
 
@@ -30,12 +37,13 @@ function Featured() {
             </Link>
           </div>
           <ul className="featured-cards grid grid-cols-4 justify-between gap-y-5">                      
-            {data["results"].slice(0,4).map((item) => {
-             return (<li className="featured-card w-[250px] h-[542px]" data-id={item.id} onClick={(e)=> path=`/${item.id}`}>
+            {data["results"].slice(0,elCards).map((item) => {
+             return (<Link to={`/about/${item.id}`} className="featured-card w-[250px] h-[542px]" data-id={item.id} onClick={(e)=> path=`/${item.id}`}>
               <div className="card-img relative">
                 <img
                   src={`http://image.tmdb.org/t/p/w500${item["poster_path"]}`}
                   alt="image"
+                  className="h-[375px]"
                 />
                 <img
                   src={Like}
@@ -66,7 +74,7 @@ function Featured() {
                 Action, Adventure, Horror
                 </p>
               </div>
-            </li>);
+            </Link>);
             })}
           </ul>
         </div>
